@@ -1,4 +1,4 @@
-﻿
+﻿//control
 //rm -rf.git
 //entonces hago un
 
