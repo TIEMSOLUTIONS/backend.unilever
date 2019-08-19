@@ -10,7 +10,7 @@ namespace Sistema.Web.Models.Wcm._1_N.RegistroAnomalia
         public int idregistroanomalia { get; set; }
         public string codigo { get; set; }
         public string nombre { get; set; }
-        public DateTime emision_ts { get; set; }
+        public string emision_ts { get; set; }
         public int idusuario { get; set; }
         public string usuario { get; set; }
         public int paso_ma { get; set; }

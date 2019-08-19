@@ -21,7 +21,7 @@ namespace Sistema.Web.Models.Wcm._1_N.RegistroAnomalia
         public int idregistroanomalia { get; set; }
         public string codigo { get; set; }
         public string nombre { get; set; }
-        public DateTime emision_ts { get; set; }
+        public string emision_ts { get; set; }
         public int idusuario { get; set; }
         public string usuario { get; set; }
         public int paso_ma { get; set; }
@@ -44,7 +44,7 @@ namespace Sistema.Web.Models.Wcm._1_N.RegistroAnomalia
 
         public string descripcion { get; set; }
         public string sol_implementada { get; set; }
-        public DateTime ejecucion_ts { get; set; }
+        public string ejecucion_ts { get; set; }
         public int idtecnico { get; set; }
         public string usuariotecnico { get; set; }
         public bool confirmacion_tec { get; set; }
@@ -52,7 +52,7 @@ namespace Sistema.Web.Models.Wcm._1_N.RegistroAnomalia
         public string usuariosupervisor { get; set; }
 
         public bool confirmacion_super { get; set; }
-        public DateTime cierre_ts { get; set; }
+        public string cierre_ts { get; set; }
         public string observaciones { get; set; }
         public bool prog { get; set; }
         public string foto { get; set; }
