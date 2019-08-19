@@ -13,9 +13,7 @@ namespace Sistema.Entidades.Wcm._1_N
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public string codigo { get; set; }
         public string nombre { get; set; }
-
         public DateTime emision_ts { get; set; }
-
         public int idusuario { get; set; }
         public int paso_ma { get; set; }
         public string criticidad { get; set; }

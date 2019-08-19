@@ -153,11 +153,11 @@ namespace Sistema.Web.Controllers.Wcm._1_N
             string fechaReco = "09/01/2007 10:00";
             DateTime fechaR = new DateTime();
             fechaR = DateTime.Parse(fechaReco);
-
+           
             RegistroAnomalia anomalia = new RegistroAnomalia
             {
-                nombre =model.nombre,
-                emision_ts = model.emision_ts,
+                nombre = model.nombre,
+                emision_ts = fechaHora,                 
                 idusuario = model.idusuario,
                 paso_ma = model.paso_ma,
                 criticidad = model.criticidad,
@@ -288,6 +288,264 @@ namespace Sistema.Web.Controllers.Wcm._1_N
 
             });
         }
+
+        // GET: api/RegistrosAnomalias/SelectListaTecnicoPropios
+        [HttpGet("[action]/{id}")]
+        public async Task<IEnumerable<SelectViewModel>> SelectListaTecnicoPropios([FromRoute] int id)
+        {
+            var anomalia = await _context.Registrosanomalias
+                 .Include(i => i.usuario)
+                 .Include(i => i.usuariotecnico)
+                 .Include(i => i.usuariosupervisor)
+                 .Include(i => i.area)
+                 .Include(i => i.maquina)
+                 .Include(i => i.anomalia)
+                 .Include(i => i.suceso)
+                 .Include(i => i.tarjeta)
+                 .Where(i => i.confirmacion_tec == false)
+                 .Where(i => i.idusuario == id || i.idtecnico == id)
+                 .OrderByDescending(i => i.idregistroanomalia)
+                 .Take(100)
+                 .ToListAsync();
+
+            return anomalia.Select(i => new SelectViewModel
+            {
+                idregistroanomalia = i.idregistroanomalia,
+                //idproveedor = i.idproveedor,
+                //proveedor = i.persona.nombre,
+                codigo = i.codigo,
+                nombre = i.nombre,
+                emision_ts = i.emision_ts,
+                idusuario = i.idusuario,
+                usuario = i.usuario.nombre,
+                paso_ma = i.paso_ma,
+                criticidad = i.criticidad,
+                turno = i.turno,
+                idarea = i.idarea,
+                area = i.area.nombre,
+                idmaquina = i.idmaquina,
+                maquina = i.maquina.nombre,
+                idanomalia = i.idanomalia,
+                anomaliac = i.anomalia.nombre,
+                idsuceso = i.idsuceso,
+                relacionado = i.suceso.nombre,
+                idtarjeta = i.idtarjeta,
+                tarjeta = i.tarjeta.nombre,
+                descripcion = i.descripcion,
+                sol_implementada = i.sol_implementada,
+                ejecucion_ts = i.ejecucion_ts,
+                idtecnico = i.idtecnico,
+                usuariotecnico = i.usuariotecnico.nombre,
+                confirmacion_tec = i.confirmacion_tec,
+                idsupervisor = i.idsupervisor,
+                usuariosupervisor = i.usuariosupervisor.nombre,
+                confirmacion_super = i.confirmacion_super,
+                cierre_ts = i.cierre_ts,
+                observaciones = i.observaciones,
+                prog = i.prog,
+                foto = i.foto
+
+            });
+        }
+        // GET: api/RegistrosAnomalias/SelectListaSupervisor
+        [HttpGet("[action]")]
+        public async Task<IEnumerable<SelectViewModel>> SelectListaSupervisor()
+        {
+            var anomalia = await _context.Registrosanomalias
+                 .Include(i => i.usuario)
+                 .Include(i => i.usuariotecnico)
+                 .Include(i => i.usuariosupervisor)
+                 .Include(i => i.area)
+                 .Include(i => i.maquina)
+                 .Include(i => i.anomalia)
+                 .Include(i => i.suceso)
+                 .Include(i => i.tarjeta)
+                 .Where(i => i.confirmacion_tec == true)
+                 //.Where(i => i.idusuario == id || i.idtecnico == id)
+                 .OrderByDescending(i => i.idregistroanomalia)
+                 .Take(100)
+                 .ToListAsync();
+
+            return anomalia.Select(i => new SelectViewModel
+            {
+                idregistroanomalia = i.idregistroanomalia,
+                //idproveedor = i.idproveedor,
+                //proveedor = i.persona.nombre,
+                codigo = i.codigo,
+                nombre = i.nombre,
+                emision_ts = i.emision_ts,
+                idusuario = i.idusuario,
+                usuario = i.usuario.nombre,
+                paso_ma = i.paso_ma,
+                criticidad = i.criticidad,
+                turno = i.turno,
+                idarea = i.idarea,
+                area = i.area.nombre,
+                idmaquina = i.idmaquina,
+                maquina = i.maquina.nombre,
+                idanomalia = i.idanomalia,
+                anomaliac = i.anomalia.nombre,
+                idsuceso = i.idsuceso,
+                relacionado = i.suceso.nombre,
+                idtarjeta = i.idtarjeta,
+                tarjeta = i.tarjeta.nombre,
+                descripcion = i.descripcion,
+                sol_implementada = i.sol_implementada,
+                ejecucion_ts = i.ejecucion_ts,
+                idtecnico = i.idtecnico,
+                usuariotecnico = i.usuariotecnico.nombre,
+                confirmacion_tec = i.confirmacion_tec,
+                idsupervisor = i.idsupervisor,
+                usuariosupervisor = i.usuariosupervisor.nombre,
+                confirmacion_super = i.confirmacion_super,
+                cierre_ts = i.cierre_ts,
+                observaciones = i.observaciones,
+                prog = i.prog,
+                foto = i.foto
+
+            });
+        }
+
+        // GET: api/RegistrosAnomalias/SelectListaTecnicoPropiosConfirmado
+        [HttpGet("[action]/{id}")]
+        public async Task<IEnumerable<SelectViewModel>> SelectListaTecnicoPropiosConfirmado([FromRoute] int id)
+        {
+            var anomalia = await _context.Registrosanomalias
+                 .Include(i => i.usuario)
+                 .Include(i => i.usuariotecnico)
+                 .Include(i => i.usuariosupervisor)
+                 .Include(i => i.area)
+                 .Include(i => i.maquina)
+                 .Include(i => i.anomalia)
+                 .Include(i => i.suceso)
+                 .Include(i => i.tarjeta )
+                 .Where(i => i.confirmacion_tec == true)
+                 .Where(i => i.idusuario == id ||  i.idtecnico==id)
+                 .OrderByDescending(i => i.idregistroanomalia)
+                 .Take(100)
+                 .ToListAsync();
+
+            return anomalia.Select(i => new SelectViewModel
+            {
+                idregistroanomalia = i.idregistroanomalia,
+                //idproveedor = i.idproveedor,
+                //proveedor = i.persona.nombre,
+                codigo = i.codigo,
+                nombre = i.nombre,
+                emision_ts = i.emision_ts,
+                idusuario = i.idusuario,
+                usuario = i.usuario.nombre,
+                paso_ma = i.paso_ma,
+                criticidad = i.criticidad,
+                turno = i.turno,
+                idarea = i.idarea,
+                area = i.area.nombre,
+                idmaquina = i.idmaquina,
+                maquina = i.maquina.nombre,
+                idanomalia = i.idanomalia,
+                anomaliac = i.anomalia.nombre,
+                idsuceso = i.idsuceso,
+                relacionado = i.suceso.nombre,
+                idtarjeta = i.idtarjeta,
+                tarjeta = i.tarjeta.nombre,
+                descripcion = i.descripcion,
+                sol_implementada = i.sol_implementada,
+                ejecucion_ts = i.ejecucion_ts,
+                idtecnico = i.idtecnico,
+                usuariotecnico = i.usuariotecnico.nombre,
+                confirmacion_tec = i.confirmacion_tec,
+                idsupervisor = i.idsupervisor,
+                usuariosupervisor = i.usuariosupervisor.nombre,
+                confirmacion_super = i.confirmacion_super,
+                cierre_ts = i.cierre_ts,
+                observaciones = i.observaciones,
+                prog = i.prog,
+                foto = i.foto
+
+            });
+        }
+        // PUT: api/RegistrosAnomalias/AplicarContramedida
+        [HttpPut("[action]")]
+        public async Task<IActionResult> AplicarContramedida([FromBody] ActualizarViewModelContramedida model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (model.idregistroanomalia <= 0)
+            {
+                return BadRequest();
+            }
+
+            var anomalia = await _context.Registrosanomalias.FirstOrDefaultAsync(c => c.idregistroanomalia == model.idregistroanomalia);
+
+            if (anomalia == null)
+            {
+                return NotFound();
+            }
+            var fechaHora = DateTime.Now;
+
+            anomalia.sol_implementada = model.sol_implementada;
+            anomalia.ejecucion_ts = fechaHora;
+            anomalia.idtecnico = model.idtecnico;
+            anomalia.confirmacion_tec = true;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // Guardar Excepción
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        // PUT: api/RegistrosAnomalias/ConfirmarSupervisor
+        [HttpPut("[action]")]
+        public async Task<IActionResult> ConfirmarSupervisor([FromBody] ActualizarViewModelConfirmacionTarjeta model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (model.idregistroanomalia <= 0)
+            {
+                return BadRequest();
+            }
+
+            var anomalia = await _context.Registrosanomalias.FirstOrDefaultAsync(c => c.idregistroanomalia == model.idregistroanomalia);
+
+            if (anomalia == null)
+            {
+                return NotFound();
+            }
+            var fechaHora = DateTime.Now;
+
+            anomalia.confirmacion_super = true;
+            anomalia.idsupervisor = model.idsupervisor;
+            anomalia.cierre_ts = fechaHora;
+            anomalia.observaciones = model.observaciones;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // Guardar Excepción
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+
+
 
         private bool RegistroAnomaliaExists(int id)
         {

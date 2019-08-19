@@ -11,7 +11,7 @@ namespace Sistema.Web.Models.Wcm._1_N.RegistroAnomalia
 
         public string nombre { get; set; }
 
-        public DateTime emision_ts { get; set; }
+        ///public DateTime emision_ts { get; set; }
 
         [Required]
         public int idusuario { get; set; }
