@@ -229,7 +229,7 @@ namespace Sistema.Web.Controllers.Wcm._1_N
             return Ok();
         }
 
-
+        //datos de entrada
         // GET: api/RegistrosAnomalias/SelectListaTecnico
         [HttpGet("[action]/{id}")]
         public async Task<IEnumerable<SelectViewModel>> SelectListaTecnico([FromRoute] int id)
