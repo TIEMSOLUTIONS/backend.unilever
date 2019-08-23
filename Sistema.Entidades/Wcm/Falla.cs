@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema.Entidades.Wcm._1_N;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -15,5 +16,7 @@ namespace Sistema.Entidades.Wcm
         public string descripcion { get; set; }
         public bool activo { get; set; }
         public bool eliminado { get; set; }
+        public ICollection<RegistroShe> registroShe { get; set; }
+
     }
 }

@@ -33,6 +33,9 @@ namespace Sistema.Entidades.Usuarios
         public ICollection<RegistroAnomalia> registroAnomaliaTecnico { get; set; }
         public ICollection<RegistroAnomalia> registroAnomaliaSupervisor{ get; set; }
 
+        public ICollection<RegistroShe> registroshe { get; set; }
+        public ICollection<RegistroShe> registroSheTecnico { get; set; }
+        public ICollection<RegistroShe> registroSheSupervisor { get; set; }
 
 
 

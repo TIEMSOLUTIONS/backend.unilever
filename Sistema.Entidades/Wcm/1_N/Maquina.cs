@@ -19,6 +19,7 @@ namespace Sistema.Entidades.Wcm._1_N
         public Area area { get; set; }
 
         public ICollection<RegistroAnomalia> registroAnomalia { get; set; }
+        public ICollection<RegistroShe> registroShe { get; set; }
 
     }
 }

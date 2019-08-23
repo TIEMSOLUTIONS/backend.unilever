@@ -37,6 +37,8 @@ namespace Sistema.Datos
         public DbSet<Maquina> Maquinas { get; set; }
 
         public DbSet<RegistroAnomalia> Registrosanomalias { get; set; }
+        public DbSet<RegistroShe> Registrosshe { get; set; }
+
 
         // PAMCO
         public DbSet<CategoriaP> CategoriasP{ get; set; }
@@ -69,6 +71,8 @@ namespace Sistema.Datos
             modelBuilder.ApplyConfiguration(new CategoriapMap());
 
             modelBuilder.ApplyConfiguration(new RegistroAnomaliaMap());
+            modelBuilder.ApplyConfiguration(new RegistroSheMap());
+
         }
 
     }

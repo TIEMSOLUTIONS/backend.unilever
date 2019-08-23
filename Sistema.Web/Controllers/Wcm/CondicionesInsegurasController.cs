@@ -21,7 +21,7 @@ namespace Sistema.Web.Controllers.Wcm
         {
             _context = context;
         }
-        // GET: api/CondicionInsegura/Listar
+        // GET: api/CondicionesInseguras/Listar
         [HttpGet("[action]")]
         public async Task<IEnumerable<CondicionInseguraViewModel>> Listar()
         {
@@ -29,14 +29,30 @@ namespace Sistema.Web.Controllers.Wcm
 
             return categoria.Select(c => new CondicionInseguraViewModel
             {
-                idcondinsegura = c.idcondinsegura,
+                idcondicion = c.idcondicion,
                 nombre = c.nombre,
                 descripcion = c.descripcion,
                 activo = c.activo,
                 eliminado = c.eliminado
             });
         }
+        // GET: api/CondicionesInseguras/ListarCondiciones
+        [HttpGet("[action]")]
+        public async Task<IEnumerable<CondicionInseguraViewModel>> ListarCondiciones()
+        {
 
+            var condicionInseg = await _context.CondicionesInseguras.Where(f => f.activo == true).ToListAsync();
+
+
+            return condicionInseg.Select(c => new CondicionInseguraViewModel
+            {
+                idcondicion = c.idcondicion,
+                nombre = c.nombre,
+                descripcion = c.descripcion,
+                activo = c.activo,
+                eliminado = c.eliminado
+            });
+        }
         // GET: api/CondicionInsegura/Mostrar/1
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Mostrar([FromRoute] int id)
@@ -51,7 +67,7 @@ namespace Sistema.Web.Controllers.Wcm
 
             return Ok(new CondicionInseguraViewModel
             {
-                idcondinsegura = area.idcondinsegura,
+                idcondicion = area.idcondicion,
                 nombre = area.nombre,
                 descripcion = area.descripcion,
                 activo = area.activo,
@@ -69,12 +85,12 @@ namespace Sistema.Web.Controllers.Wcm
                 return BadRequest(ModelState);
             }
 
-            if (model.idcondinsegura <= 0)
+            if (model.idcondicion <= 0)
             {
                 return BadRequest();
             }
 
-            var categoria = await _context.CondicionesInseguras.FirstOrDefaultAsync(c => c.idcondinsegura == model.idcondinsegura);
+            var categoria = await _context.CondicionesInseguras.FirstOrDefaultAsync(c => c.idcondicion == model.idcondicion);
 
             if (categoria == null)
             {
@@ -166,7 +182,7 @@ namespace Sistema.Web.Controllers.Wcm
                 return BadRequest();
             }
 
-            var area = await _context.CondicionesInseguras.FirstOrDefaultAsync(c => c.idcondinsegura == id);
+            var area = await _context.CondicionesInseguras.FirstOrDefaultAsync(c => c.idcondicion == id);
 
             if (area == null)
             {
@@ -198,7 +214,7 @@ namespace Sistema.Web.Controllers.Wcm
                 return BadRequest();
             }
 
-            var area = await _context.CondicionesInseguras.FirstOrDefaultAsync(c => c.idcondinsegura == id);
+            var area = await _context.CondicionesInseguras.FirstOrDefaultAsync(c => c.idcondicion == id);
 
             if (area == null)
             {

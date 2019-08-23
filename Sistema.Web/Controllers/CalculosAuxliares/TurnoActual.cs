@@ -22,16 +22,16 @@ namespace Sistema.Web.Controllers.CalculosAuxliares
             DateTime fechaActual = Convert.ToDateTime(fechaSysetema);
             // horas de los turno 1
             DateTime horaT1ini = Convert.ToDateTime("06:00:00");
-            DateTime horaT1fin = Convert.ToDateTime("14:00:00");
+            DateTime horaT1fin = Convert.ToDateTime("13:59:59");
             // horas de los turno 2
             DateTime horaT2ini = Convert.ToDateTime("14:00:00");
-            DateTime horaT2fin = Convert.ToDateTime("22:00:00");
+            DateTime horaT2fin = Convert.ToDateTime("21:59:59");
             // horas de los turno 3
             DateTime horaT3ini = Convert.ToDateTime("22:00:00");
-            DateTime horaT3fin = Convert.ToDateTime("00:00:00");
+            DateTime horaT3fin = Convert.ToDateTime("23:59:59");
             //aux
             DateTime horaT3auxini = Convert.ToDateTime("00:00:00");
-            DateTime horaT3auxfin = Convert.ToDateTime("06:00:00");
+            DateTime horaT3auxfin = Convert.ToDateTime("05:59:59");
 
 
             // conversion final turno 1
