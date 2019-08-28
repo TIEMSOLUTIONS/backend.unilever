@@ -81,6 +81,67 @@ namespace Sistema.Web.Controllers.Wcm._1_N
 
 
         }
+        // GET: api/RegistrosAnomalias/ListarTipoTarjeta   por id
+        // [Authorize(Roles = "Almacenero,Administrador")]
+        [HttpGet("[action]/{id}")]
+        public async Task<IEnumerable<RegistroAnomaliaViewModel>> ListarTipoTarjeta([FromRoute] int id)
+        {
+            List<RegistroAnomalia> anomalia = await _context.Registrosanomalias
+                .Include(i => i.usuario)
+                .Include(i => i.usuariotecnico)
+                .Include(i => i.usuariosupervisor)
+                .Include(i => i.area)
+                .Include(i => i.maquina)
+                .Include(i => i.anomalia)
+                .Include(i => i.suceso)
+                .Include(i => i.tarjeta)
+                .Where(i => i.idtarjeta == id)
+                .Where(i => i.confirmacion_tec == false)
+                .Where(i => i.confirmacion_super == false)
+                .OrderByDescending(i => i.idregistroanomalia)
+                .Take(100)
+                .ToListAsync();
+
+            return anomalia.Select(i => new RegistroAnomaliaViewModel
+            {
+                idregistroanomalia = i.idregistroanomalia,
+                //idproveedor = i.idproveedor,
+                //proveedor = i.persona.nombre,
+                codigo = i.codigo,
+                nombre = i.nombre,
+                emision_ts = i.emision_ts.ToString("dd/MM/yyyy hh:mm:ss tt"),
+                idusuario = i.idusuario,
+                usuario = i.usuario.nombre,
+                paso_ma = i.paso_ma,
+                criticidad = i.criticidad,
+                turno = i.turno,
+                idarea = i.idarea,
+                area = i.area.nombre,
+                idmaquina = i.idmaquina,
+                maquina = i.maquina.nombre,
+                idanomalia = i.idanomalia,
+                anomaliac = i.anomalia.nombre,
+                idsuceso = i.idsuceso,
+                relacionado = i.suceso.nombre,
+                idtarjeta = i.idtarjeta,
+                tarjeta = i.tarjeta.nombre,
+                descripcion = i.descripcion,
+                sol_implementada = i.sol_implementada,
+                ejecucion_ts = i.ejecucion_ts,
+                idtecnico = i.idtecnico,
+                usuariotecnico = i.usuariotecnico.nombre,
+                confirmacion_tec = i.confirmacion_tec,
+                idsupervisor = i.idsupervisor,
+                usuariosupervisor = i.usuariosupervisor.nombre,
+                confirmacion_super = i.confirmacion_super,
+                cierre_ts = i.cierre_ts,
+                observaciones = i.observaciones,
+                prog = i.prog,
+                foto = i.foto
+            });
+
+
+        }
         // GET: api/RegistrosAnomalias/ListarTecnico
         // [Authorize(Roles = "Almacenero,Administrador")]
         [HttpGet("[action]")]
