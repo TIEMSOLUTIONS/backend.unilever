@@ -23,7 +23,9 @@ namespace Sistema.Datos
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Ingreso> Ingresos { get; set; }
         public DbSet<DetalleIngreso> DetallesIngresos { get; set; }
-
+        /////////////////////////////////////////////////////////////////////////////////// PAMCO
+        public DbSet<Categoria_perdida> Categoria_perdida { get; set; }
+        public DbSet<Registro_pamco> Registro_Pamcos { get; set; }
 
 
         // dbSET WCM
@@ -38,7 +40,6 @@ namespace Sistema.Datos
 
         public DbSet<RegistroAnomalia> Registrosanomalias { get; set; }
         public DbSet<RegistroShe> Registrosshe { get; set; }
-
 
         // PAMCO
         public DbSet<CategoriaP> CategoriasP{ get; set; }
@@ -68,11 +69,9 @@ namespace Sistema.Datos
             modelBuilder.ApplyConfiguration(new CondicioneInseguraMap());
             modelBuilder.ApplyConfiguration(new SucesoMap());
             modelBuilder.ApplyConfiguration(new MaquinaMap());
-            modelBuilder.ApplyConfiguration(new CategoriapMap());
+            modelBuilder.ApplyConfiguration(new RegistroAnomaliaMap());
 
             modelBuilder.ApplyConfiguration(new RegistroAnomaliaMap());
-            modelBuilder.ApplyConfiguration(new RegistroSheMap());
-
         }
 
     }
