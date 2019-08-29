@@ -1,14 +1,14 @@
-﻿//controles de v9
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Sistema.Datos.Mapping.Almacen;
 using Sistema.Datos.Mapping.Pamco;
+using Sistema.Datos.Mapping.Imagen;
 using Sistema.Datos.Mapping.Usuarios;
 using Sistema.Datos.Mapping.Ventas;
 using Sistema.Datos.Mapping.Wcm;
 using Sistema.Datos.Mapping.Wcm._1_N;
 using Sistema.Entidades.Almacen;
 using Sistema.Entidades.Pamco;
+using Sistema.Entidades.Imagen;
 using Sistema.Entidades.Usuarios;
 using Sistema.Entidades.Ventas;
 using Sistema.Entidades.Wcm;
@@ -25,8 +25,12 @@ namespace Sistema.Datos
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Ingreso> Ingresos { get; set; }
         public DbSet<DetalleIngreso> DetallesIngresos { get; set; }
+        /////////////////////////////////////////////////////////////////////////////////// PAMCO
+        public DbSet<Categoria_perdida> Categoria_perdida { get; set; }
+        public DbSet<Registro_pamco> Registro_Pamcos { get; set; }
 
-
+        /////////////////////////////////////////////////////////////////////////////////// imagen
+        public DbSet<Imagenes> Imagenes { get; set; }
 
         // dbSET WCM
         public DbSet<Area> Areas { get; set; }
@@ -39,12 +43,6 @@ namespace Sistema.Datos
         public DbSet<Maquina> Maquinas { get; set; }
 
         public DbSet<RegistroAnomalia> Registrosanomalias { get; set; }
-        public DbSet<RegistroShe> Registrosshe { get; set; }
-
-
-        // PAMCO
-        public DbSet<CategoriaP> CategoriasP{ get; set; }
-        public object CategoriaP { get; set; }
 
         public DbContextSistema(DbContextOptions<DbContextSistema> options) : base(options)
         {
@@ -70,11 +68,14 @@ namespace Sistema.Datos
             modelBuilder.ApplyConfiguration(new CondicioneInseguraMap());
             modelBuilder.ApplyConfiguration(new SucesoMap());
             modelBuilder.ApplyConfiguration(new MaquinaMap());
-            modelBuilder.ApplyConfiguration(new CategoriapMap());
-
             modelBuilder.ApplyConfiguration(new RegistroAnomaliaMap());
-            modelBuilder.ApplyConfiguration(new RegistroSheMap());
 
+            ///////////////////////////////////////////////////////////// PAMCO
+            modelBuilder.ApplyConfiguration(new CategoriaPerdidaMap());
+            modelBuilder.ApplyConfiguration(new RegistroPamcoMap());
+
+            ///////////////////////////////////////////////////////////// imagen
+            modelBuilder.ApplyConfiguration(new ImagenesMap());
         }
 
     }

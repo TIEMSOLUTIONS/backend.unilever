@@ -33,9 +33,7 @@ namespace Sistema.Entidades.Wcm._1_N
         public DateTime cierre_ts { get; set; }
         public string observaciones { get; set; }
         public bool prog { get; set; }
-        public string foto_anomalia { get; set; }
-        public string foto_solucion { get; set; }
-
+        public string foto { get; set; }
         public bool eliminado { get; set; }
 
         public Usuario usuario { get; set; }

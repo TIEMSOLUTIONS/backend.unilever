@@ -20,7 +20,6 @@ namespace Sistema.Entidades.Wcm
 
         public ICollection<RegistroAnomalia> registroAnomalia { get; set; }
 
-        public ICollection<RegistroShe> registroShe { get; set; }
 
     }
 }
