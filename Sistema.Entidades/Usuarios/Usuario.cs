@@ -27,6 +27,8 @@ namespace Sistema.Entidades.Usuarios
         public bool condicion { get; set; }
         public string avatar { get; set; }
 
+
+
         public Rol rol { get; set; }
 
         public ICollection<Ingreso> ingresos { get; set; }
@@ -34,6 +36,9 @@ namespace Sistema.Entidades.Usuarios
         public ICollection<RegistroAnomalia> registroAnomaliaTecnico { get; set; }
         public ICollection<RegistroAnomalia> registroAnomaliaSupervisor{ get; set; }
 
+        public ICollection<RegistroShe> registroshe { get; set; }
+        public ICollection<RegistroShe> registroSheTecnico { get; set; }
+        public ICollection<RegistroShe> registroSheSupervisor { get; set; }
 
 
 

@@ -4,16 +4,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sistema.Web.Models.Wcm.CondicionInsegura
+namespace Sistema.Web.Models.Pamco.Categoria
 {
-    public class ActualizarViewModel
+    public class CrearViewModel
     {
-        [Required]
-        public int idcondicion { get; set; }
+        
         [Required]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "El nombre no debe de tener más de 50 caracteres, ni menos de 3 caracteres.")]
         public string nombre { get; set; }
         [StringLength(256)]
-        public string descripcion { get; set; }
+        public int cat_padre { get; set; }
+      
+
+
+
     }
 }

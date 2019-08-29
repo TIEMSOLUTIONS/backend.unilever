@@ -6,77 +6,62 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sistema.Datos;
-using Sistema.Entidades.Wcm;
-using Sistema.Web.Models.Wcm.CondicionInsegura;
+using Sistema.Entidades.Pamco;
+using Sistema.Web.Models.Pamco.Categoria;
 
-namespace Sistema.Web.Controllers.Wcm
+namespace Sistema.Web.Controllers.Pamco
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CondicionesInsegurasController : ControllerBase
+    public class CategoriasppController : ControllerBase
     {
         private readonly DbContextSistema _context;
 
-        public CondicionesInsegurasController(DbContextSistema context)
+        public CategoriasppController(DbContextSistema context)
         {
             _context = context;
         }
-        // GET: api/CondicionesInseguras/Listar
+
+        // GET: api/Categorias/Listar
         [HttpGet("[action]")]
-        public async Task<IEnumerable<CondicionInseguraViewModel>> Listar()
+        public async Task<IEnumerable<CategoriaViewModel>> Listar()
         {
-            var categoria = await _context.CondicionesInseguras.ToListAsync();
+            var categoria = await _context.CategoriasP.ToListAsync();
 
-            return categoria.Select(c => new CondicionInseguraViewModel
+            return categoria.Select(c => new CategoriaViewModel
             {
-                idcondicion = c.idcondicion,
+                idcategoria = c.idcategoria,
                 nombre = c.nombre,
-                descripcion = c.descripcion,
-                activo = c.activo,
-                eliminado = c.eliminado
+                cat_padre = c.cat_padre,
+                activo = c.activo
             });
+
         }
-        // GET: api/CondicionesInseguras/ListarCondiciones
-        [HttpGet("[action]")]
-        public async Task<IEnumerable<CondicionInseguraViewModel>> ListarCondiciones()
-        {
 
-            var condicionInseg = await _context.CondicionesInseguras.Where(f => f.activo == true).ToListAsync();
+       
 
-
-            return condicionInseg.Select(c => new CondicionInseguraViewModel
-            {
-                idcondicion = c.idcondicion,
-                nombre = c.nombre,
-                descripcion = c.descripcion,
-                activo = c.activo,
-                eliminado = c.eliminado
-            });
-        }
-        // GET: api/CondicionInsegura/Mostrar/1
+        // GET: api/Categoriasp/Mostrar/1
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Mostrar([FromRoute] int id)
         {
 
-            var area = await _context.CondicionesInseguras.FindAsync(id);
+            var categoria = await _context.CategoriasP.FindAsync(id);
 
-            if (area == null)
+            if (categoria == null)
             {
                 return NotFound();
             }
 
-            return Ok(new CondicionInseguraViewModel
+            return Ok(new CategoriaViewModel
             {
-                idcondicion = area.idcondicion,
-                nombre = area.nombre,
-                descripcion = area.descripcion,
-                activo = area.activo,
-                eliminado = area.eliminado
+                idcategoria = categoria.idcategoria,
+                nombre = categoria.nombre,
+                cat_padre = categoria.cat_padre,
+                activo = categoria.activo
             });
         }
 
-
-        // PUT: api/CondicionInsegura/Actualizar
+        // PUT: api/Categoriasp/Actualizar
         [HttpPut("[action]")]
         public async Task<IActionResult> Actualizar([FromBody] ActualizarViewModel model)
         {
@@ -85,12 +70,12 @@ namespace Sistema.Web.Controllers.Wcm
                 return BadRequest(ModelState);
             }
 
-            if (model.idcondicion <= 0)
+            if (model.idcategoria <= 0)
             {
                 return BadRequest();
             }
 
-            var categoria = await _context.CondicionesInseguras.FirstOrDefaultAsync(c => c.idcondicion == model.idcondicion);
+            var categoria = await _context.CategoriasP.FirstOrDefaultAsync(c => c.idcategoria == model.idcategoria);
 
             if (categoria == null)
             {
@@ -98,7 +83,7 @@ namespace Sistema.Web.Controllers.Wcm
             }
 
             categoria.nombre = model.nombre;
-            categoria.descripcion = model.descripcion;
+            categoria.cat_padre = model.cat_padre;
 
             try
             {
@@ -113,7 +98,7 @@ namespace Sistema.Web.Controllers.Wcm
             return Ok();
         }
 
-        // POST: api/CondicionInsegura/Crear
+        // POST: api/Categoriasp/Crear
         [HttpPost("[action]")]
         public async Task<IActionResult> Crear([FromBody] CrearViewModel model)
         {
@@ -122,15 +107,14 @@ namespace Sistema.Web.Controllers.Wcm
                 return BadRequest(ModelState);
             }
 
-            CondicionInsegura condInsg = new CondicionInsegura
+            CategoriaP categoria = new CategoriaP
             {
                 nombre = model.nombre,
-                descripcion = model.descripcion,
-                activo = true,
-                eliminado = false
+                cat_padre = model.cat_padre,
+                activo = true
             };
 
-            _context.CondicionesInseguras.Add(condInsg);
+            _context.CategoriasP.Add(categoria);
             try
             {
                 await _context.SaveChangesAsync();
@@ -143,7 +127,7 @@ namespace Sistema.Web.Controllers.Wcm
             return Ok();
         }
 
-        // DELETE: api/CondicionInsegura/Eliminar/1
+        // DELETE: api/Categoriasp/Eliminar/1
         [HttpDelete("[action]/{id}")]
         public async Task<IActionResult> Eliminar([FromRoute] int id)
         {
@@ -152,13 +136,13 @@ namespace Sistema.Web.Controllers.Wcm
                 return BadRequest(ModelState);
             }
 
-            var CondicionInsegura = await _context.CondicionesInseguras.FindAsync(id);
-            if (CondicionInsegura == null)
+            var categoria = await _context.CategoriasP.FindAsync(id);
+            if (categoria == null)
             {
                 return NotFound();
             }
 
-            _context.CondicionesInseguras.Remove(CondicionInsegura);
+            _context.CategoriasP.Remove(categoria);
             try
             {
                 await _context.SaveChangesAsync();
@@ -168,11 +152,10 @@ namespace Sistema.Web.Controllers.Wcm
                 return BadRequest(ex);
             }
 
-            return Ok(CondicionInsegura);
-
-
+            return Ok(categoria);
         }
-        // PUT: api/CondicionInsegura/Desactivar/1
+
+        // PUT: api/Categoriasp/Desactivar/1
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Desactivar([FromRoute] int id)
         {
@@ -182,14 +165,14 @@ namespace Sistema.Web.Controllers.Wcm
                 return BadRequest();
             }
 
-            var area = await _context.CondicionesInseguras.FirstOrDefaultAsync(c => c.idcondicion == id);
+            var categoria = await _context.CategoriasP.FirstOrDefaultAsync(c => c.idcategoria == id);
 
-            if (area == null)
+            if (categoria == null)
             {
                 return NotFound();
             }
 
-            area.activo = false;
+            categoria.activo = false;
 
             try
             {
@@ -204,7 +187,7 @@ namespace Sistema.Web.Controllers.Wcm
             return Ok();
         }
 
-        // PUT: api/Categorias/Activar/1
+        // PUT: api/Categoriasp/Activar/1
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Activar([FromRoute] int id)
         {
@@ -214,14 +197,14 @@ namespace Sistema.Web.Controllers.Wcm
                 return BadRequest();
             }
 
-            var area = await _context.CondicionesInseguras.FirstOrDefaultAsync(c => c.idcondicion == id);
+            var categoria = await _context.CategoriasP.FirstOrDefaultAsync(c => c.idcategoria == id);
 
-            if (area == null)
+            if (categoria == null)
             {
                 return NotFound();
             }
 
-            area.activo = true;
+            categoria.activo = true;
 
             try
             {
@@ -236,9 +219,9 @@ namespace Sistema.Web.Controllers.Wcm
             return Ok();
         }
 
-
-
+        private bool CategoriaPExists(int id)
+        {
+            return _context.CategoriasP.Any(e => e.idcategoria == id);
+        }
     }
 }
-
-

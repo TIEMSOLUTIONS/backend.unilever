@@ -37,6 +37,23 @@ namespace Sistema.Web.Controllers.Wcm
                 eliminado = c.eliminado
             });
         }
+        // GET: api/Falla/ListarFallas
+        [HttpGet("[action]")]
+        public async Task<IEnumerable<FallaViewModel>> ListarFallas()
+        {
+
+            var falla = await _context.Fallas.Where(f => f.activo == true).ToListAsync();
+               
+
+            return falla.Select(c => new FallaViewModel
+            {
+                idfalla = c.idfalla,
+                nombre = c.nombre,
+                descripcion = c.descripcion,
+                activo = c.activo,
+                eliminado = c.eliminado
+            });
+        }
 
         // GET: api/Falla/Mostrar/1
         [HttpGet("[action]/{id}")]
