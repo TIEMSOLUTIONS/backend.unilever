@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//controles de v9
+
+using Microsoft.EntityFrameworkCore;
 using Sistema.Datos.Mapping.Almacen;
 using Sistema.Datos.Mapping.Pamco;
 using Sistema.Datos.Mapping.Usuarios;
