@@ -54,7 +54,30 @@ namespace Sistema.Web.Controllers
                 password_hash=u.password_hash,
                 condicion = u.condicion
             });
+        }
 
+        // GET: api/Usuarios/Listaravatar
+        [Authorize(Roles = "Administrador")]
+        [HttpGet("[action]")]
+        public async Task<IEnumerable<UsuarioViewModel>> Listaravatar()
+        {
+            var usuario = await _context.Usuarios.Include(u => u.rol).ToListAsync();
+
+            return usuario.Select(u => new UsuarioViewModel
+            {
+                idusuario = u.idusuario,
+                idrol = u.idrol,
+                rol = u.rol.nombre,
+                nombre = u.nombre,
+                tipo_documento = u.tipo_documento,
+                num_documento = u.num_documento,
+                direccion = u.direccion,
+                telefono = u.telefono,
+                email = u.email,
+                password_hash = u.password_hash,
+                condicion = u.condicion,
+                avatar = u.avatar
+            });
         }
 
         // POST: api/Usuarios/Crear
@@ -85,7 +108,8 @@ namespace Sistema.Web.Controllers
                 email=model.email.ToLower(),
                 password_hash=passwordHash,
                 password_salt=passwordSalt,
-                condicion = true
+                condicion = true,
+                avatar = model.avatar
             };
 
             _context.Usuarios.Add(usuario);
@@ -140,6 +164,7 @@ namespace Sistema.Web.Controllers
             usuario.direccion = model.direccion;
             usuario.telefono = model.telefono;
             usuario.email = model.email.ToLower();
+            usuario.avatar = model.avatar;
 
             if (model.act_password == true)
             {

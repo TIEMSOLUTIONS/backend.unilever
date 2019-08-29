@@ -11,6 +11,7 @@ namespace Sistema.Web.Models.Pamco.Registro_pamco
         public int idcategoria { get; set; }
         public int idusuario { get; set; }
         public int idmaquina { get; set; }
+        public string evento { get; set; }
         public string ts { get; set; }
         public string turno { get; set; }
         public string hora_inicio { get; set; }

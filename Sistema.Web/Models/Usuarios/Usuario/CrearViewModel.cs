@@ -20,6 +20,7 @@ namespace Sistema.Web.Models.Usuarios.Usuario
         public string email { get; set; }
         [Required]
         public string password { get; set; }
+        public string avatar { get; set; }
 
 
     }

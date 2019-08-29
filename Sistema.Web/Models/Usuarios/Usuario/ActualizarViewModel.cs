@@ -25,5 +25,6 @@ namespace Sistema.Web.Models.Usuarios.Usuario
         [Required]
         public string password { get; set; }
         public bool act_password { get; set; }
+        public string avatar { get; set; }
     }
 }

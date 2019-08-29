@@ -26,13 +26,16 @@ namespace Sistema.Web.Controllers.Pamco
         [HttpGet("[action]")]
         public async Task<IEnumerable<Registro_pamcoViewModel>> listar()
         {
-            var registro_pamcos = await _context.Registro_Pamcos.ToListAsync();
+            var registro_pamcos = await _context.Registro_Pamcos.Where(c => c.eliminado == false).ToListAsync();
+
             return registro_pamcos.Select(c => new Registro_pamcoViewModel
             {
                 idpamco = c.idpamco,
                 idcategoria = c.idcategoria,
                 idusuario = c.idusuario,
-                ts = c.ts,
+                idmaquina = c.idmaquina,
+                evento = c.evento,
+                ts = c.ts.ToString("dd/MM/yyyy hh:mm:ss tt"),
                 turno = c.turno,
                 hora_inicio = c.hora_inicio,
                 hora_final = c.hora_final,
@@ -52,7 +55,9 @@ namespace Sistema.Web.Controllers.Pamco
                 idpamco = c.idpamco,
                 idcategoria = c.idcategoria,
                 idusuario = c.idusuario,
-                ts = c.ts,
+                idmaquina = c.idmaquina,
+                evento = c.evento,
+                ts = c.ts.ToString("dd/MM/yyyy hh:mm:ss tt"),
                 turno = c.turno,
                 hora_inicio = c.hora_inicio,
                 hora_final = c.hora_final,
@@ -78,7 +83,9 @@ namespace Sistema.Web.Controllers.Pamco
                 idpamco = registro_pamco.idpamco,
                 idcategoria = registro_pamco.idcategoria,
                 idusuario = registro_pamco.idusuario,
-                ts = registro_pamco.ts,
+                idmaquina = registro_pamco.idmaquina,
+                evento = registro_pamco.evento,
+                ts = registro_pamco.ts.ToString("dd/MM/yyyy hh:mm:ss tt"),
                 turno = registro_pamco.turno,
                 hora_inicio = registro_pamco.hora_inicio,
                 hora_final = registro_pamco.hora_final,
@@ -111,6 +118,8 @@ namespace Sistema.Web.Controllers.Pamco
             registroPamco.idpamco = model.idpamco;
             registroPamco.idcategoria = model.idcategoria;
             registroPamco.idusuario = model.idusuario;
+            registroPamco.idmaquina = model.idmaquina;
+            registroPamco.evento = model.evento;
             registroPamco.ts = model.ts;
             registroPamco.turno = model.turno;
             registroPamco.hora_inicio = model.hora_inicio;
@@ -133,7 +142,7 @@ namespace Sistema.Web.Controllers.Pamco
 
         // POST: api/Registro_Pamco/Crear
         [HttpPost("[action]")]
-        public async Task<IActionResult> CrearCategoria([FromBody] CreateRegistroPamcoViewModel model)
+        public async Task<IActionResult> Crearpamco([FromBody] CreateRegistroPamcoViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -148,9 +157,11 @@ namespace Sistema.Web.Controllers.Pamco
             {
                 idcategoria = model.idcategoria,
                 idusuario = model.idusuario,
-                ts = fechaHora.ToString("dd/MM/yyyy hh:mm:ss tt"),
+                idmaquina = model.idmaquina,
+                evento = model.evento,
+                ts = fechaHora,
                 turno = model.turno,
-                hora_inicio = fechaR.ToString("hh:mm:ss tt"),
+                hora_inicio = model.hora_inicio,
                 hora_final = model.hora_final,
                 tiempo_total = model.tiempo_total,
                 eliminado = false

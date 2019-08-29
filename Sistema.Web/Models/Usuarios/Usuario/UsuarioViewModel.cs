@@ -15,8 +15,9 @@ namespace Sistema.Web.Models.Usuarios.Usuario
         public string email { get; set; }
         public byte[] password_hash { get; set; }
         public bool condicion { get; set; }
+        public string avatar { get; set; }
 
-        
+
 
     }
 }

@@ -54,7 +54,21 @@ namespace Sistema.Web.Controllers.Pamco
             });
 
         }
+        // GET: api/Categoria_perdida/SelectEspecifico/1
+        [HttpGet("[action]/{nivel}")]
+        public async Task<IEnumerable<SelectCategoriaPerdidaViewModel>> SelectEspecifico(int nivel)
+        {
+            var categoriaPerdida = await _context.Categoria_perdida.Where(c => c.activo == true && c.eliminado == false && c.nivel == nivel).ToListAsync();
 
+            return categoriaPerdida.Select(c => new SelectCategoriaPerdidaViewModel
+            {
+                idcategoria = c.idcategoria,
+                nombre = c.nombre,
+                nivel = c.nivel,
+                cat_padre = c.cat_padre
+            });
+
+        }
         // GET: api/Categoria_perdida/mostrar/5
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<Categoria_perdida>> mostrar(int id)
